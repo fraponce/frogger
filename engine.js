@@ -1,5 +1,5 @@
 var Game = new function() {
-
+	var boards = [];
   // Inicialización del juego
   // se obtiene el canvas, se cargan los recursos y se llama a callback
   this.initialize = function(canvasElementId, sprite_data, callback) {
@@ -24,7 +24,7 @@ var Game = new function() {
 
 
   // le asignamos un nombre lógico a cada tecla que nos interesa
-  var KEY_CODES = { 37:'left', 39:'right', 32 :'fire' };
+  var KEY_CODES = { 37:'left', 39:'right', 38:'up', 40:'down', 32: 'fire' };
 
   this.keys = {};
 
@@ -199,6 +199,13 @@ var GameBoard = function() {
   this.add = function(obj) { 
     obj.board=this; 
     this.objects.push(obj); 
+    this.cnt[obj.type] = (this.cnt[obj.type] || 0) + 1;
+    return obj; 
+  };
+
+  this.addInitial = function(obj) { 
+    obj.board=this; 
+    this.objects.unshift(obj); 
     this.cnt[obj.type] = (this.cnt[obj.type] || 0) + 1;
     return obj; 
   };
